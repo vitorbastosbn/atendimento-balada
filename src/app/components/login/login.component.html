@@ -1,0 +1,40 @@
+<div class="centralizar-div">
+  <mat-card style="width: 20%;">
+    <form (ngSubmit)="login()" [formGroup]="formulario">
+      <mat-card-header style="justify-content: center;">
+        <mat-card-title>Login</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="organizar-componentes-colunas">
+          <mat-form-field appearance="standard" class="largura-total">
+            <mat-label>Usuário</mat-label>
+            <input matInput formControlName="username">
+            <mat-error *ngIf="usuario.invalid">
+              Email é <strong>obrigatório</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="standard" class="largura-total">
+            <mat-label>Senha</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="senha.invalid">
+              Senha é <strong>obrigatório</strong>
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="primary" class="largura-total" type="submit">
+          <span *ngIf="!loading">Login</span>
+          <mat-icon *ngIf="loading"><mat-spinner color="accent" diameter="20">
+          </mat-spinner></mat-icon>
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>
