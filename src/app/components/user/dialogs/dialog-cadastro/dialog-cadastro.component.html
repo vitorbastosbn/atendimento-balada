@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Cadastro de usuários</h1>
+<div mat-dialog-content>
+  <form [formGroup]="form">
+    <p>
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Nome Completo</mat-label>
+        <input matInput formControlName="fullname">
+      </mat-form-field>
+      <mat-form-field appearance="outline" style="width: 49%;">
+        <mat-label>Usuário</mat-label>
+        <input matInput formControlName="username">
+      </mat-form-field>
+      <mat-form-field appearance="outline" style="width: 49%; margin-left: 10px;">
+        <mat-label>Perfil</mat-label>
+        <mat-select formControlName="permissions" multiple>
+          <mat-option *ngFor="let p of permissions" [value]="p.id">{{p.description}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Senha</mat-label>
+        <input matInput type="password" formControlName="password">
+      </mat-form-field>
+    </p>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onConfirm()" style="width: 49%;" color="primary" [disabled]="form.invalid">Confirmar</button>
+  <button mat-raised-button (click)="onClose()" style="width: 49%; margin-left: 10px;">Cancelar</button>
+</div>

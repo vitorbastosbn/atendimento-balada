@@ -1,0 +1,42 @@
+.extended-fab-button {
+  width: unset;
+  padding: 0 26px;
+  border-radius: 29px;
+}
+
+.extended-fab-button__text {
+  font-weight: 300;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+table {
+  width: 100%;
+}
+
+th.mat-header-cell {
+  text-align: center !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  color: black;
+}
+
+.mat-column-fullname {
+  width: 40%;
+  text-align: center;
+}
+
+.mat-column-username {
+  width: 20%;
+  text-align: center;
+}
+
+.mat-column-permissions {
+  width: 30%;
+  text-align: center;
+}
+
+.mat-column-actions {
+  width: 10%;
+  text-align: center;
+}

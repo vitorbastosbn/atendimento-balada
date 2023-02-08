@@ -1,11 +1,11 @@
-import { NotificacaoService } from './../../services/notificacao.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from './../../services/login.service';
+import { NotificacaoService } from './../../services/notificacao.service';
 
-import { AccountCredentials } from 'src/app/models/account-credentials.model';
-import { NotificacaoEnum } from 'src/app/enum/notificacao.enum';
 import { Router } from '@angular/router';
+import { NotificacaoEnum } from 'src/app/enum/notificacao.enum';
+import { AccountCredentials } from 'src/app/models/account-credentials.model';
 
 @Component({
   selector: 'app-login',
@@ -44,9 +44,12 @@ export class LoginComponent implements OnInit {
 
     this.loginService.autenticar(this.credenciais).subscribe({
       next: (s: any) => {
+        console.log(s);
         localStorage.setItem('accessToken', s.accessToken);
         localStorage.setItem('refreshToken', s.refreshToken);
-        this.notificacaoService.exibirMensagem(NotificacaoEnum.SUCCESS, "Bem-vindo! " + s.username);
+        localStorage.setItem('username', s.username);
+        localStorage.setItem('fullname', s.fullname);
+        this.notificacaoService.exibirMensagem(NotificacaoEnum.SUCCESS, "Bem-vindo! " + s.fullname);
         this.router.navigate(["home"])
       },
       error: (e) => {

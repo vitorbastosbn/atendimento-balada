@@ -1,1 +1,35 @@
-<router-outlet></router-outlet>
+<mat-drawer-container class="example-container" autosize hasBackdrop="true">
+  <mat-toolbar color="primary" *ngIf="estaLogado()">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+      (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>MS Atendimento</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-drawer #drawer mode="side" style="width: 20%;">
+    <mat-toolbar color="primary"></mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item (click)="drawer.toggle()" [routerLink]="'/home'" style="margin-left: 8px;"> Dashboard </a>
+      <mat-expansion-panel hideToggle [class.mat-elevation-z0]="true" [expanded]="indexExpanded == 0">
+        <mat-expansion-panel-header style="font-size: 16px;">
+          Cadastro
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item (click)="drawer.toggle(); togglePanels(-1)" [routerLink]="'/user'"> Usuários </a>
+          <a mat-list-item (click)="drawer.toggle(); togglePanels(-1)" [routerLink]="'/profile'"> Perfis </a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+    </mat-nav-list>
+  </mat-drawer>
+
+  <mat-card class="card-central" *ngIf="estaLogado()">
+    <router-outlet></router-outlet>
+  </mat-card>
+
+  <router-outlet *ngIf="!estaLogado()"></router-outlet>
+</mat-drawer-container>
