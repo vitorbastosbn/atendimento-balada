@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { NotificacaoEnum } from 'src/app/enum/notificacao.enum';
 import { AuthService } from './auth.service';
 import { NotificacaoService } from './services/notificacao.service';
-import { NotificacaoEnum } from 'src/app/enum/notificacao.enum';
 
 @Component({
   selector: 'app-root',
@@ -18,8 +18,8 @@ export class AppComponent {
     private notificacao: NotificacaoService
   ) { }
 
-  estaLogado() {
-    return this.auth.estaLogado();
+  hasLoggin() {
+    return this.auth.hasLoggin();
   }
 
   logout() {

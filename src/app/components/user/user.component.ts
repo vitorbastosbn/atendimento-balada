@@ -22,7 +22,7 @@ export class UserComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.service.findAll().subscribe((s) => { this.users = s });
+    this.findAll();
   }
 
   openDialog() {
@@ -35,29 +35,25 @@ export class UserComponent implements OnInit {
     dialogRef.afterClosed().subscribe(userResult => {
       if (userResult) {
         let user: User = userResult;
-        let permissions: Permission[] = [];
-
-        userResult.permissions.forEach((id: any) => {
-          let p: Permission = { id: id }
-          permissions.push(p);
+        let permissions: Permission[] = userResult.permissions.map((id: any) => {
+          return { id: id };
         });
-
         user.permissions = permissions;
 
         if (user.id)
-          this.service.edit(user).subscribe(() => this.findall());
+          this.service.edit(user).subscribe(() => this.findAll());
         else
-          this.service.create(user).subscribe(() => this.findall());
+          this.service.create(user).subscribe(() => this.findAll());
       }
     });
   }
 
   delete(id: number) {
-    this.service.delete(id).subscribe(() => this.findall());
+    this.service.delete(id).subscribe(() => this.findAll());
   }
 
-  findall() {
-    this.service.findAll().subscribe((s) => { this.users = s });
+  findAll() {
+    this.service.findAll().subscribe((s) => this.users = s);
   }
 
   loadUser(user: User) {

@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { UserComponent } from './components/user/user.component';
+import { PermissionGuard } from './security/permission.guard';
 
 const routes: Routes = [
   {
@@ -24,11 +25,15 @@ const routes: Routes = [
   },
   {
     path: 'user',
-    component: UserComponent
+    component: UserComponent,
+    canActivate: [PermissionGuard],
+    data: { permission: 'ADMIN' }
   },
   {
     path: 'profile',
-    component: RoleComponent
+    component: RoleComponent,
+    canActivate: [PermissionGuard],
+    data: { permission: 'ADMIN' }
   },
   {
     path: '**',

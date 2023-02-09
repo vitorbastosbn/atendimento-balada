@@ -11,7 +11,7 @@ export class AuthService {
     private router: Router
   ) { }
 
-  estaLogado() {
+  hasLoggin() {
     return localStorage.getItem('accessToken') !== null ? !this.tokenExpired(localStorage.getItem('accessToken')!) : false;
   }
 

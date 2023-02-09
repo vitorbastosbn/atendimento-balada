@@ -4,7 +4,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Permission } from './../../../../models/permission.model';
 import { PermissionService } from './../../../../services/permission.service';
 
-const PONTO = '.';
 const ESPACO = ' ';
 const USERNAME = 'username';
 const FULLNAME = 'fullname';
@@ -35,15 +34,12 @@ export class DialogCadastroComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.form.setValue(this.data);
+    if (this.data)
+      this.form.setValue(this.data);
     this.form.get('permissions')?.setValue(this.data.permissions.map((permission: Permission) => permission.id));
-
-    console.table(this.form);
-
     this.form.get(FULLNAME)?.valueChanges.subscribe(v => {
       this.form.get(USERNAME)?.setValue(this.generateUserName(v));
     });
-
     this.form.get(USERNAME)?.disable();
     this.preloadProfile();
   }
@@ -53,19 +49,21 @@ export class DialogCadastroComponent implements OnInit {
   }
 
   private generateUserName(fullname: string | null) {
-    if (fullname !== null && fullname !== undefined) {
+    if (fullname) {
       this.usernames = [];
 
-      let names = fullname.split(ESPACO);
+      const names = fullname.split(ESPACO);
 
       names.forEach((name) => {
         let username = '';
         if (!this.pronoums.includes(name.toLowerCase())) {
-          username = username.concat(name.toLowerCase(), PONTO);
+          username = `${name.toLowerCase()}.`;
 
-          names.forEach((nameInitials) => {
-            if (!this.pronoums.includes(nameInitials.toLowerCase()))
-              username = username.concat(nameInitials.charAt(0).toLowerCase());
+          const initials = names.filter((nameInitials) => !this.pronoums.includes(nameInitials.toLowerCase()));
+
+          initials.forEach((initial) => {
+            if (initial)
+              username += initial[0].toLowerCase()
           });
 
           this.usernames.push(username);
@@ -73,7 +71,6 @@ export class DialogCadastroComponent implements OnInit {
       });
       return this.usernames[0];
     } return null;
-
   }
 
   onConfirm() {

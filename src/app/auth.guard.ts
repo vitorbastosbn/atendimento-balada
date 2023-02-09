@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
   ) { }
 
   canActivate() {
-    if (this.auth.estaLogado()) {
+    if (this.auth.hasLoggin()) {
       return true;
     }
 
