@@ -6,6 +6,7 @@ import { NotificacaoService } from './../../services/notificacao.service';
 import { Router } from '@angular/router';
 import { NotificacaoEnum } from 'src/app/enum/notificacao.enum';
 import { AccountCredentials } from 'src/app/models/account-credentials.model';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private notificacaoService: NotificacaoService,
-    private router: Router
+    private router: Router,
+    private shared: SharedService
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +50,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('refreshToken', authResult.refreshToken);
         localStorage.setItem('username', authResult.username);
         localStorage.setItem('fullname', authResult.fullname);
+        this.shared.permissions = authResult.permissions;
         this.notificacaoService.exibirMensagem(NotificacaoEnum.SUCCESS, "Bem-vindo! " + authResult.fullname);
         this.router.navigate(["home"])
       },

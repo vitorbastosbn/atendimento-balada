@@ -1,7 +1,9 @@
+import { LoginService } from './services/login.service';
 import { Component } from '@angular/core';
 import { NotificacaoEnum } from 'src/app/enum/notificacao.enum';
 import { AuthService } from './auth.service';
 import { NotificacaoService } from './services/notificacao.service';
+import { SharedService } from './services/shared.service';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +17,7 @@ export class AppComponent {
 
   constructor(
     private auth: AuthService,
+    private shared: SharedService,
     private notificacao: NotificacaoService
   ) { }
 
@@ -30,4 +33,16 @@ export class AppComponent {
   togglePanels(index: number) {
     this.indexExpanded = index;
   }
+
+  checkPermissionMenu(permissions: string[]): boolean {
+    let hasPermission = false;
+
+    permissions.forEach(permission => {
+      if (this.shared.roles.includes(permission)) hasPermission = true;
+      return;
+    })
+
+    return hasPermission;
+  }
+
 }

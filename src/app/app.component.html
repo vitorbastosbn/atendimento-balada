@@ -15,7 +15,7 @@
     <mat-toolbar color="primary"></mat-toolbar>
     <mat-nav-list>
       <a mat-list-item (click)="drawer.toggle()" [routerLink]="'/home'" style="margin-left: 8px;"> Dashboard </a>
-      <mat-expansion-panel hideToggle [class.mat-elevation-z0]="true" [expanded]="indexExpanded == 0">
+      <mat-expansion-panel hideToggle [class.mat-elevation-z0]="true" [expanded]="indexExpanded == 0" *ngIf="this.checkPermissionMenu(['ADMIN'])">
         <mat-expansion-panel-header style="font-size: 16px;">
           Cadastro
         </mat-expansion-panel-header>
