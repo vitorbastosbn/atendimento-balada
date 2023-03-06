@@ -4,9 +4,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Permission } from './../../../../models/permission.model';
 import { PermissionService } from './../../../../services/permission.service';
 
+const STRING_VAZIO = '';
 const ESPACO = ' ';
 const USERNAME = 'username';
 const FULLNAME = 'fullname';
+const PERMISSIONS = 'permissions';
 
 @Component({
   selector: 'app-dialog-cadastro',
@@ -20,10 +22,10 @@ export class DialogCadastroComponent implements OnInit {
 
   form = this.formBuilder.group({
     id: [null],
-    fullname: ['', [Validators.required]],
-    username: ['', [Validators.required]],
+    fullname: [STRING_VAZIO, [Validators.required]],
+    username: [STRING_VAZIO, [Validators.required]],
     permissions: [[], [Validators.required]],
-    password: ['', [Validators.required]]
+    password: [STRING_VAZIO, [Validators.required]]
   });
 
   constructor(
@@ -34,18 +36,20 @@ export class DialogCadastroComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.data)
-      this.form.setValue(this.data);
-    this.form.get('permissions')?.setValue(this.data.permissions.map((permission: Permission) => permission.id));
+    this.preloadProfile();
+    if (this.data) {
+      this.form.patchValue(this.data);
+    }
+    if (this.data.permissions)
+      this.form.get(PERMISSIONS)?.setValue(this.data.permissions.map((permission: Permission) => permission.id));
     this.form.get(FULLNAME)?.valueChanges.subscribe(v => {
       this.form.get(USERNAME)?.setValue(this.generateUserName(v));
     });
     this.form.get(USERNAME)?.disable();
-    this.preloadProfile();
   }
 
   preloadProfile() {
-    this.permissionService.findAll().subscribe((s) => this.permissions = s);
+    this.permissionService.findAll().subscribe((permissions) => this.permissions = permissions);
   }
 
   private generateUserName(fullname: string | null) {

@@ -43,15 +43,15 @@ export class LoginComponent implements OnInit {
     this.credenciais.password = this.senha.value;
 
     this.loginService.autenticar(this.credenciais).subscribe({
-      next: (s: any) => {
-        localStorage.setItem('accessToken', s.accessToken);
-        localStorage.setItem('refreshToken', s.refreshToken);
-        localStorage.setItem('username', s.username);
-        localStorage.setItem('fullname', s.fullname);
-        this.notificacaoService.exibirMensagem(NotificacaoEnum.SUCCESS, "Bem-vindo! " + s.fullname);
+      next: (authResult: any) => {
+        localStorage.setItem('accessToken', authResult.accessToken);
+        localStorage.setItem('refreshToken', authResult.refreshToken);
+        localStorage.setItem('username', authResult.username);
+        localStorage.setItem('fullname', authResult.fullname);
+        this.notificacaoService.exibirMensagem(NotificacaoEnum.SUCCESS, "Bem-vindo! " + authResult.fullname);
         this.router.navigate(["home"])
       },
-      error: (e) => {
+      error: () => {
         this.loading = false;
         this.notificacaoService.exibirMensagem(NotificacaoEnum.ERROR, "Acesso Negado!");
       }

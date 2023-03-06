@@ -21,7 +21,7 @@ export class RoleComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.service.findAll().subscribe((s) => this.permissions = s);
+    this.service.findAll().subscribe((permissions) => this.permissions = permissions);
   }
 
   openDialog() {
@@ -50,7 +50,7 @@ export class RoleComponent implements OnInit {
   }
 
   findAll() {
-    this.service.findAll().subscribe((s) => this.permissions = s);
+    this.service.findAll().subscribe((permissions) => this.permissions = permissions);
   }
 
 }

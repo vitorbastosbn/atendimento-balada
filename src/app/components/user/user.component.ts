@@ -25,7 +25,10 @@ export class UserComponent implements OnInit {
     this.findAll();
   }
 
-  openDialog() {
+  openDialog(isLoadUser: boolean) {
+    if (!isLoadUser)
+      this.user = {} as User;
+
     const dialogRef = this.dialog.open(DialogCadastroComponent, {
       width: '40%',
       disableClose: true,
@@ -53,12 +56,12 @@ export class UserComponent implements OnInit {
   }
 
   findAll() {
-    this.service.findAll().subscribe((s) => this.users = s);
+    this.service.findAll().subscribe((users) => this.users = users);
   }
 
   loadUser(user: User) {
     this.user = user;
-    this.openDialog();
+    this.openDialog(true);
   }
 
 }
